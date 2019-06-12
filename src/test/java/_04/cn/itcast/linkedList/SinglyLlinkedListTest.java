@@ -1,6 +1,7 @@
 package _04.cn.itcast.linkedList;
 
 import java.util.Iterator;
+import java.util.Stack;
 
 import org.junit.Test;
 
@@ -180,6 +181,35 @@ public class SinglyLlinkedListTest {
 		// 因为我们不知道怎么让一个链表可以使用for each 遍历，所以我们就先用索引的方式去遍历 
 		for (int i = linkedList.size() - 1; i >= 0; i--) {
 			System.out.println(linkedList.getByIndex(i));
+		}
+	}
+	
+	// 需求： 逆序打印一个单向链表
+	// 【思路2】 我们可以正向遍历，然后先不打印，把所有的数据保存到一个栈中
+	//         利用栈先入后出的特点，实现逆序打印
+	@Test
+	public void test2() {
+		SinglyLinkedList<Student> linkedList = new SinglyLinkedList<Student>();
+		linkedList.addByOrder(new Student(3, "小白", 12));
+		linkedList.addByOrder(new Student(2, "小花", 12));
+		linkedList.addByOrder(new Student(5, "eric", 12));
+		linkedList.addByOrder(new Student(1, "小明", 12));
+		linkedList.addByOrder(new Student(4, "小黑", 12));
+		System.out.println("正向打印：");
+		System.out.println(linkedList);
+		
+		Stack<Student> stack = new Stack<>();
+		for (Student stu : linkedList) {
+			stack.push(stu);
+		}
+		// 一定要把 size 另外存起来，因为我们是在遍历的过程中取出数据
+		// 如果写在 for 结构里面，会有问题
+//		int size = stack.size();
+//		for (int i = 0; i < size; i++) {
+//			System.out.println(stack.pop());
+//		}
+		while(!stack.isEmpty()) {
+			System.out.println(stack.pop());
 		}
 	}
 }

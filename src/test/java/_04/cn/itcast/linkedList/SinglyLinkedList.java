@@ -19,7 +19,8 @@ import java.util.Iterator;
  *  13、size()      获取链表长度（因为我们有维护 size，所以直接返回成员变量 size 即可）
  *  14、 addAll(SinglyLinkedList<? extends T> linkedList)     // 直接在最后位置添加另一个集合，不排序
  *  15、 addAllToIndex(int index, SinglyLinkedList<? extends T> linkedList) // 从指定的索引处开始添加另一个集合
- *  15、 addAllByOrder(SinglyLinkedList<? extends T> linkedList)  // 添加另一个集合，要求还能自动排序
+ *  16、 addAllByOrder(SinglyLinkedList<? extends T> linkedList)  // 添加另一个集合，要求还能自动排序
+ *  17、 reverse()    返回单向链表
  * @author Administrator
  *
  * @param <T>

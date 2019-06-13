@@ -20,7 +20,7 @@ import java.util.Iterator;
  *  14、 addAll(SinglyLinkedList<? extends T> linkedList)     // 直接在最后位置添加另一个集合，不排序
  *  15、 addAllToIndex(int index, SinglyLinkedList<? extends T> linkedList) // 从指定的索引处开始添加另一个集合
  *  16、 addAllByOrder(SinglyLinkedList<? extends T> linkedList)  // 添加另一个集合，要求还能自动排序
- *  17、 reverse()    返回单向链表
+ *  17、 reverse()    返转单向链表
  * @author Administrator
  *
  * @param <T>

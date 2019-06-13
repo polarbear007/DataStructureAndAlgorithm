@@ -49,7 +49,7 @@ public class Student implements Comparable<Student>{
 	public int compareTo(Student stu) {
 		int num =  this.id - stu.id;
 		int num2 = num == 0 ? this.age - stu.age : num;
-		int num3 = num2 == 0? stu.name.compareTo(this.name) : num2;
+		int num3 = num2 == 0? this.name.compareTo(stu.name) : num2;
 		return num3;
 	}
 

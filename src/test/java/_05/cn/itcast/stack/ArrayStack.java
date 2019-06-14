@@ -70,6 +70,16 @@ public class ArrayStack {
 		}
 	}
 	
+	// 查看栈顶元素
+	public Object peek() {
+		if(isEmpty()) {
+			System.out.println("栈是空的，没有数据可以弹出");
+			return null;
+		}else {
+			return arr[top];
+		}
+	}
+	
 	// 打印 stack 
 	@Override
 	public String toString() {

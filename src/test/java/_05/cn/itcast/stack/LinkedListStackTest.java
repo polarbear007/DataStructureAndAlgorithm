@@ -2,10 +2,10 @@ package _05.cn.itcast.stack;
 
 import org.junit.Test;
 
-public class ArrayStackTest {
+public class LinkedListStackTest {
 	@Test
 	public void testPush() {
-		ArrayStack stack = new ArrayStack(5);
+		LinkedListStack<Integer> stack = new LinkedListStack<Integer>(5);
 		stack.push(1);
 		stack.push(2);
 		stack.push(3);
@@ -17,7 +17,7 @@ public class ArrayStackTest {
 	
 	@Test
 	public void testPop() {
-		ArrayStack stack = new ArrayStack(5);
+		LinkedListStack<Integer> stack = new LinkedListStack<Integer>(5);
 		stack.push(1);
 		stack.push(2);
 		stack.push(3);
@@ -34,7 +34,7 @@ public class ArrayStackTest {
 	
 	@Test
 	public void testSizeAndLength() {
-		ArrayStack stack = new ArrayStack(5);
+		LinkedListStack<Integer> stack = new LinkedListStack<Integer>(5);
 		stack.push(1);
 		stack.push(2);
 		stack.push(3);

@@ -46,7 +46,7 @@ public class LinkedListQueue<T> {
 		if(isEmpty()) {
 			return null;
 		}else {
-			return list.getFirst();
+			return list.removeFirst();
 		}
 	}
 	

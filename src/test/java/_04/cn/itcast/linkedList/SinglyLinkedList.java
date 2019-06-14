@@ -26,7 +26,7 @@ import java.util.Iterator;
  * @param <T>
  */
 
-class SinglyLinkedList<T> implements Iterable<T>{
+public class SinglyLinkedList<T> implements Iterable<T>{
 	// 不管怎么样，我们先声明一个头部结点，这个结点不保存数据
 	private Node<T> headNode = new Node<T>();
 	// 这个成员变量保存的是结尾结点，当我们保存一个新的结点时，需要更新此变量指向

@@ -13,7 +13,7 @@ public class SimpleCalculatorTest {
 	@Test
 	public void test2() {
 		SimpleCalculator calculator = new SimpleCalculator();
-		Double result = calculator.parseAndCalculate("10.6*22.123+7.3-52.6/");
+		Double result = calculator.parseAndCalculate("10.6*22.123+7.3-52.6/45");
 		System.out.println(result);
 	}
 }

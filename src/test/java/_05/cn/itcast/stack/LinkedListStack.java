@@ -37,7 +37,7 @@ public class LinkedListStack<T> {
 	// 入栈操作
 	public boolean push(T item) {
 		if(isFull()) {
-			System.out.println("栈已经满了，无法添加数据");
+			//System.out.println("栈已经满了，无法添加数据");
 			return false;
 		}else {
 			return list.addFirst(item);
@@ -47,7 +47,7 @@ public class LinkedListStack<T> {
 	// 出栈操作
 	public T pop() {
 		if(isEmpty()) {
-			System.out.println("栈是空的，没有数据可以弹出");
+			//System.out.println("栈是空的，没有数据可以弹出");
 			return null;
 		}else {
 			return list.removeFirst();
@@ -57,7 +57,7 @@ public class LinkedListStack<T> {
 	// 查看栈顶元素
 	public T peek() {
 		if(isEmpty()) {
-			System.out.println("栈是空的，没有数据可以弹出");
+			//System.out.println("栈是空的，没有数据可以弹出");
 			return null;
 		}else {
 			return list.getFirst();

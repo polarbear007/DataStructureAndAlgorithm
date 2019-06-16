@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Calculator {
+	// 这个方法可以把普通的中缀表达式转成逆波兰表达式
 	public List<String> transferToReversePolishNotation(String expression) {
 		// 事先校验一下
 		if(expression == null || expression.trim().equals("")) {
@@ -85,6 +86,7 @@ public class Calculator {
 		
 	}
 	
+	// 这个方法可以根据逆波兰表达式，计算出算式的结果
 	public Double calculateByReversePolishNotationList(List<String> rpnList) {
 		// 根据逆波兰表达式计算，我们只需要一个栈
 		LinkedListStack<Double> nums = new LinkedListStack<Double>();

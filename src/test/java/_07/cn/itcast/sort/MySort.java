@@ -1,5 +1,8 @@
 package _07.cn.itcast.sort;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class MySort {
 	// 冒泡排序法
 	public static void bubbleSort(int[] arr) {
@@ -123,7 +126,7 @@ public class MySort {
 		}
 	}
 
-	// 快速排序
+	// 快速排序--- 挖坑法实现
 	public static void quickSort(int[] arr, int low, int high) {
 		if (low < high) {
 			int i = low;
@@ -169,6 +172,73 @@ public class MySort {
 		}
 	}
 
+	// 快速排序的另一种实现--- 指针交换法
+	public static void quickSort2(int[] arr, int low, int high){
+		if(arr == null) {
+			throw new RuntimeException("数组不能为 null");
+		}
+		if(low >= high) {
+			return;
+		}
+		
+		int l = low;
+		int h = high;
+		int temp = 0;
+		
+		// 随机选取一个基准值，防止一直选取到极端值作为基准值
+		int pivot = arr[new Random().nextInt(high - low) + low + 1];
+		
+		while(l < h) {
+			// 从左侧开始找，找到一个大于或者等于 pivot 的值才会停下来
+			// 最差就是找到跟 pivot 相等的值
+			// 如果 arr[l] < pivot ,那么我们就找下一个， l++
+			while(arr[l] < pivot) {
+				l++;
+			}
+			
+			// 从右侧开始找，找到一个小于或者等于 pivot 的值才会停下来
+			// 最差就是找到跟 pivot 相等的值
+			// 如果 arr[h] > pivot ，那么我们就找下一个，h--
+			while(arr[h] > pivot) {
+				h--;
+			}
+			
+			// 这里可能理解起来比较困难，上面的操作可以保证下面两点
+			// [low, l)  区间的全部元素都小于 pivot， 不包含 l
+			// (h, high] 区间的全部元素都大于 pivot ，不包含 h
+			
+			// 如果相等，循环外部会另外处理
+			// 如果不相等, 有下面两种情况：
+			// l > h ，这是最正常的情况，说明该交换都交换过了,直接不处理，下次循环会直接退出
+			// 如果 l < h ，说明还是可以正常交换的，执行下面的交换操作
+			if(l < h) {
+				temp = arr[l];
+				arr[l] = arr[h];
+				arr[h] = temp;
+				l++;
+				h--;
+				System.out.println(Arrays.toString(arr));
+			}
+		}
+		if(l == h) {
+			// 如果刚好 arr[l] == arr[h] == pivot
+			// 那么这个值可以不参与排序，这是最理想的情况
+			// 我们什么都不处理
+			if(arr[l] > pivot) {
+				h--;
+			}else if(arr[l] < pivot){
+				l++;
+			}
+		}
+		
+		//  最终数组分割的情况，请参考笔记，这里注释已经不想再写一遍了
+		if(low < l - 1) {
+			quickSort(arr, low, l - 1);
+		}
+		if(high > h + 1) {
+			quickSort(arr, h + 1, high);
+		}
+	}
 	// 归并排序
 	public static void mergeSort(int[] arr) {
 		if (arr == null) {

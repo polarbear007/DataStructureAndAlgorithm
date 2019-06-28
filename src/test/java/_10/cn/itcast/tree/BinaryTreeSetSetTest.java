@@ -115,10 +115,27 @@ public class BinaryTreeSetSetTest {
 	}
 	
 	@Test
-	public void test() {
-		Stack<Integer> stack = new Stack<Integer>();
-		stack.push(null);
-		stack.push(null);
-		System.out.println(stack.size());
+	public void testContains() {
+		BinaryTreeSet<Integer> tree = new BinaryTreeSet<>();
+		tree.add(10);
+		tree.add(5);
+		tree.add(15);
+		tree.add(3);
+		tree.add(7);
+		tree.add(12);
+		tree.add(17);
+		tree.add(1);
+		tree.add(4);
+		tree.add(6);
+		tree.add(9);
+		tree.add(11);
+		tree.add(14);
+		tree.add(16);
+		tree.add(19);
+		tree.add(2);
+		System.out.println(tree.contains(17));
+		System.out.println(tree.contains(100));
+		System.out.println(tree.contains(-89));
+		System.out.println(tree.contains(2));
 	}
 }

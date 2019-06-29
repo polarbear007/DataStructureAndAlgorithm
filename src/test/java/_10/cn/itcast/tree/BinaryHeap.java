@@ -2,6 +2,7 @@ package _10.cn.itcast.tree;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * 	下面的二叉堆具有如下的几个主要方法：
@@ -12,14 +13,15 @@ import java.util.Arrays;
  * 	5、 insert()		 添加一个新的元素
  * 	6、 ensureCapacity()  当数组长度不够时，自动扩容
  * 	7、 toString()		 打印堆（我们就按打印基本的数组那样处理就好了）
+ *  8、 iterator()       实现 Iterable 接口，方便二叉堆的遍历
  * 
  * 	【说明】
  * @author Administrator
  *
  * @param <T>
  */
-public class BinaryHeap<T extends Comparable<T>> {
-	// java 不支持泛型数组，所以构造方法我们还是得费点劲，传个类型进来才可
+public class BinaryHeap<T extends Comparable<T>> implements Iterable<T>{
+	// java 不支持泛型数组，所以构造方法我们还是得费点劲，传个类型进来才行
 	private T[] dataArray;
 	private int capacity;
 	private int size;
@@ -255,5 +257,22 @@ public class BinaryHeap<T extends Comparable<T>> {
 		result += "]";
 		
 		return result;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+			int currIndex = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return currIndex < size;
+			}
+
+			@Override
+			public T next() {
+				return dataArray[currIndex++];
+			}
+		};
 	}
 }

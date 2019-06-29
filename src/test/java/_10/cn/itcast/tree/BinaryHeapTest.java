@@ -1,6 +1,7 @@
 package _10.cn.itcast.tree;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -72,5 +73,15 @@ public class BinaryHeapTest {
 		// 再添加一个新元素，看看数组长度和元素的排列有没有变化
 		heap.insert(20);
 		System.out.println(Arrays.toString(heap.getDataArray()));
+	}
+	
+	@Test
+	public void testIterator() {
+		Integer[] arr = {8, 7, 6, 5, 4, 3, 2, 1};
+		BinaryHeap<Integer> heap = new BinaryHeap<Integer>(Integer.class, arr);
+		Iterator<Integer> it = heap.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
 	}
 }

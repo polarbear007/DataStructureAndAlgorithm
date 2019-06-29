@@ -11,6 +11,7 @@ import java.util.Arrays;
  * 	4、 removeMax()   删除堆中的最大值，其实就是删除根结点，删除以后，堆的长度会减1，我们需要重新维护大顶堆
  * 	5、 insert()		 添加一个新的元素
  * 	6、 ensureCapacity()  当数组长度不够时，自动扩容
+ * 	7、 toString()		 打印堆（我们就按打印基本的数组那样处理就好了）
  * 
  * 	【说明】
  * @author Administrator
@@ -235,6 +236,23 @@ public class BinaryHeap<T extends Comparable<T>> {
 			size --;
 		}
 		// 如果堆的大小为 0 ，那么我们什么都不需要操作，也没有什么结点可以删除， 最终返回 null 
+		
+		return result;
+	}
+	
+	@Override
+	public String toString() {
+		if(size == 0) {
+			return "[]";
+		}
+		String  result = "[";
+		for (int i = 0; i < size; i++) {
+			result += (dataArray[i] + ", ");
+		}
+		
+		// 处理一下最后一个 逗号
+		result = result.replaceAll(", $", "");
+		result += "]";
 		
 		return result;
 	}

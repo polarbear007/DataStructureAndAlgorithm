@@ -14,6 +14,7 @@ import java.util.Iterator;
  * 	6、 ensureCapacity()  当数组长度不够时，自动扩容
  * 	7、 toString()		 打印堆（我们就按打印基本的数组那样处理就好了）
  *  8、 iterator()       实现 Iterable 接口，方便二叉堆的遍历
+ *  9、 peek()			查看一下队列中的最大值，但是不删除
  * 
  * 	【说明】
  * @author Administrator
@@ -50,8 +51,8 @@ public class BinaryHeap<T extends Comparable<T>> implements Iterable<T>{
 			this.capacity = dataArray.length;
 			this.size = dataArray.length;
 			
-			// 传入了 dataArray 以后，我们需要把无序的  dataArray 转成大顶 堆
-			heapify(dataArray);
+			// 我们需要把无序的  dataArray 转成大顶 堆
+			heapify();
 			
 		}else if(capacity != null) {
 			this.capacity = capacity;
@@ -85,14 +86,16 @@ public class BinaryHeap<T extends Comparable<T>> implements Iterable<T>{
 	 * 			少了将近一半。
 	 * @param dataArray
 	 */
-	private void heapify(Object[] dataArray) {
+	private void heapify() {
 		// 使用下沉法
 		for (int i = (size - 2) / 2; i >= 0; i--) {
 			sink(i);
 		}
 		// 使用上浮法
-//		for (int i = 1; i <= size - 1; i++) {
-//			swim(i);
+//		if(size > 1) {
+//			for (int i = 1; i <= size - 1; i++) {
+//				swim(i);
+//			}
 //		}
 	}
 	
@@ -238,6 +241,19 @@ public class BinaryHeap<T extends Comparable<T>> implements Iterable<T>{
 			size --;
 		}
 		// 如果堆的大小为 0 ，那么我们什么都不需要操作，也没有什么结点可以删除， 最终返回 null 
+		
+		return result;
+	}
+	
+	/**
+	 * 	返回队列的第一个元素
+	 * @return
+	 */
+	public T peek() {
+		T result = null;
+		if(size > 0) {
+			result = dataArray[0];
+		}
 		
 		return result;
 	}

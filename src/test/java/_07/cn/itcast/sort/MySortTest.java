@@ -39,43 +39,48 @@ public class MySortTest {
 	public void compareSort() {
 		int[] intArray = ArrayUtils.generateRandomIntArray(100000);
 		long start = System.currentTimeMillis();
-		MySort.bubbleSort(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,冒泡排序耗时：" + (System.currentTimeMillis() - start));
-		
-		intArray = ArrayUtils.generateRandomIntArray(100000);
-		start = System.currentTimeMillis();
-		MySort.selectSort(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,选择排序耗时：" + (System.currentTimeMillis() - start));
-		
-		intArray = ArrayUtils.generateRandomIntArray(100000);
-		start = System.currentTimeMillis();
-		MySort.insertSort(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,插入排序耗时：" + (System.currentTimeMillis() - start));
+//		MySort.bubbleSort(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,冒泡排序耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(100000);
+//		start = System.currentTimeMillis();
+//		MySort.selectSort(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,选择排序耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(100000);
+//		start = System.currentTimeMillis();
+//		MySort.insertSort(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,插入排序耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(10000000);
+//		start = System.currentTimeMillis();
+//		MySort.shellSort(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,希尔排序耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(10000000);
+//		start = System.currentTimeMillis();
+//		MySort.quickSort(intArray, 0, intArray.length - 1);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,快速排序耗时：" + (System.currentTimeMillis() - start));
+//	
+//		intArray = ArrayUtils.generateRandomIntArray(10000000);
+//		start = System.currentTimeMillis();
+//		MySort.mergeSort(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,归并排序耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(10000000);
+//		start = System.currentTimeMillis();
+//		MySort.radixSortByLSD(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,基数排序(最低位优先)耗时：" + (System.currentTimeMillis() - start));
+//		
+//		intArray = ArrayUtils.generateRandomIntArray(10000000);
+//		start = System.currentTimeMillis();
+//		MySort.radixSortByMSD(intArray);
+//		System.out.println("数据量:"+(intArray.length / 10000)+"w,基数排序(最高位优先)耗时：" + (System.currentTimeMillis() - start));
 		
 		intArray = ArrayUtils.generateRandomIntArray(10000000);
 		start = System.currentTimeMillis();
-		MySort.shellSort(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,希尔排序耗时：" + (System.currentTimeMillis() - start));
-		
-		intArray = ArrayUtils.generateRandomIntArray(10000000);
-		start = System.currentTimeMillis();
-		MySort.quickSort(intArray, 0, intArray.length - 1);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,快速排序耗时：" + (System.currentTimeMillis() - start));
-	
-		intArray = ArrayUtils.generateRandomIntArray(10000000);
-		start = System.currentTimeMillis();
-		MySort.mergeSort(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,归并排序耗时：" + (System.currentTimeMillis() - start));
-		
-		intArray = ArrayUtils.generateRandomIntArray(10000000);
-		start = System.currentTimeMillis();
-		MySort.radixSortByLSD(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,基数排序(最低位优先)耗时：" + (System.currentTimeMillis() - start));
-		
-		intArray = ArrayUtils.generateRandomIntArray(10000000);
-		start = System.currentTimeMillis();
-		MySort.radixSortByMSD(intArray);
-		System.out.println("数据量:"+(intArray.length / 10000)+"w,基数排序(最高位优先)耗时：" + (System.currentTimeMillis() - start));
+		MySort.heapSort(intArray);
+		System.out.println("数据量:"+(intArray.length / 10000)+"w,堆排序耗时：" + (System.currentTimeMillis() - start));
 	}
 	
 	@Test
@@ -146,6 +151,14 @@ public class MySortTest {
 	public void testRadixSort4() {
 		int[] intArray = {1, 4, -3, 5};
 		MySort.radixSortByLSD(intArray);
+		System.out.println(Arrays.toString(intArray));
+	}
+	
+	@Test
+	public void testHeapSort() {
+		int[] intArray = ArrayUtils.generateRandomIntArray(15);
+		System.out.println("初始数组：" + Arrays.toString(intArray));
+		MySort.heapSort(intArray);
 		System.out.println(Arrays.toString(intArray));
 	}
 }

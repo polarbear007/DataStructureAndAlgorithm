@@ -3,6 +3,8 @@ package _07.cn.itcast.sort;
 import java.util.Arrays;
 import java.util.Random;
 
+import _10.cn.itcast.tree.BinaryHeap;
+
 public class MySort {
 	// 冒泡排序法
 	public static void bubbleSort(int[] arr) {
@@ -501,4 +503,56 @@ public class MySort {
 		return count;
 	}
 
+	/**
+	 * 	推排序
+	 * @param arr
+	 */
+	public static void heapSort(int[] arr) {
+		if(arr != null && arr.length > 1) {
+			int len = arr.length;
+			// 把无序的数组初始化成一个符合堆结构的数组
+			for (int i = (len - 2) / 2; i >= 0; i--) {
+				sink(arr, i, len);
+			}
+			
+			while(len > 1) {
+				exchange(arr, 0, len - 1);
+				len--;
+				sink(arr, 0, len);
+			}
+		}
+	}
+	
+	private static void sink(int[] arr, int rootIndex, int len) {
+		int leftIndex = 0;
+		int rightIndex = 0;
+		int maxSonIndex = 0;
+		while(true) {
+			leftIndex = rootIndex * 2 + 1;
+			rightIndex = rootIndex * 2 + 2;
+			if(rightIndex <= len - 1) {
+				maxSonIndex = arr[leftIndex] - arr[rightIndex] > 0 ? leftIndex : rightIndex;
+			}else if(leftIndex == len - 1) {
+				maxSonIndex = leftIndex;
+			}else {
+				break;
+			}
+			
+			// 如果前面没有退出循环，说明 rootIndex 还有子结点，我们就和子结点比较
+			//   如果小于子结点，我们就交换， 交换完以后， rootIndex 更新为  maxSonIndex； 
+			//   如果不小于子结点，我们就停止循环
+			if(arr[rootIndex] < arr[maxSonIndex]) {
+				exchange(arr, rootIndex, maxSonIndex);
+				rootIndex = maxSonIndex;
+			}else {
+				break;
+			}
+		}
+	}
+	
+	private static void exchange(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
 }

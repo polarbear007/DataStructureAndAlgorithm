@@ -59,6 +59,10 @@ public class MyPriorityQueue<T extends Comparable<T>> {
 		return heap.removeMax();
 	}
 	
+	public T peek() {
+		return heap.peek();
+	}
+	
 	@Override
 	public String toString() {
 		return heap.toString();

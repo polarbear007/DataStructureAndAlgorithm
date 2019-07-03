@@ -51,6 +51,12 @@ import _04.cn.itcast.linkedList.SinglyLinkedList;
 public class Huffman implements Serializable{
 	private static final long serialVersionUID = -8913866455835641487L;
 	
+	/**
+	 *  解压文件
+	 * @param targetZipFilePath
+	 * @param destFolderPath
+	 * @throws Exception
+	 */
 	public void uncompressFile(String targetZipFilePath, String destFolderPath) throws Exception {
 		if(targetZipFilePath == null) {
 			throw new RuntimeException("目标文件路径不能为空");

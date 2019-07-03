@@ -96,10 +96,12 @@ public class BinaryTreeSet<T> {
 		// 这里我们就不检查 data 是否实现了 Comparable 接口，直接类型转换
 		Comparable<T> cData = (Comparable<T>) data;
 		Node<T> currNode = rootNode;
+		int result = 0;
 		while(true) {
-			if(cData.compareTo(currNode.data) == 0) {
+			result = cData.compareTo(currNode.data);
+			if(result == 0) {
 				return true;
-			}else if(cData.compareTo(currNode.data) > 0) {
+			}else if(result > 0) {
 				// 传入的数据比当前结点的数据大，那么我们指针往右边移
 				if(currNode.right == null) {
 					return false;

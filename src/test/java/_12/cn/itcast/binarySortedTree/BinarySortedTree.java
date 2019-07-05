@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * @param <V>
  */
 public class BinarySortedTree<K extends Comparable<K>, V>{
-	private Node<K, V> rootNode;
-	private int size;
+	Node<K, V> rootNode;
+	int size;
 	
 	/**
 	 * 	返回当前二叉树的结点数量

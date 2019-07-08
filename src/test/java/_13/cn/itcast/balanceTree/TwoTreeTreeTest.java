@@ -46,13 +46,71 @@ public class TwoTreeTreeTest {
 	@Test
 	public void testGet() {
 		TwoThreeTree<Integer, String> tree = new TwoThreeTree<Integer, String>();
-		int[] arr = {5, 9, 10, 54, 74, 32, 12, 33, 44, 25, 84, 16, 24, 95};
+		int[] arr = {5, 9, 10, 54, 74, 32, 12, 33, 44, 25, 84, 16, 24, 95, 11};
 		for (int i = 0; i < arr.length; i++) {
 			tree.put(arr[i], String.valueOf(arr[i]));
 		}
 		System.out.println(tree.get(23));
 		System.out.println(tree.get(32));
 		System.out.println(tree.get(24));
+	}
+	
+	@Test
+	public void testRemove() {
+		TwoThreeTree<Integer, String> tree = new TwoThreeTree<Integer, String>();
+		int[] arr = {5, 9, 10, 54, 74, 32, 13, 33, 44, 25, 84, 16, 24, 95, 11};
+		for (int i = 0; i < arr.length; i++) {
+			tree.put(arr[i], String.valueOf(arr[i]));
+		}
+		 //测试能不能跟左子结点（叶）借用元素
+//		 System.out.println(tree.remove(25));
+		
+		// 测试能不能跟左子结点（非叶） 借用元素
+//		tree.put(12, "12");
+//		System.out.println(tree.remove(13));
+		
+		// 测试能不能跟右子结点（叶）借用元素
+//		 System.out.println(tree.remove(9));
+		
+		// 测试能不能跟 右子结点（非叶） 借用元素
+//		System.out.println(tree.remove(33));
+		
+		// 测试当有多个元素的叶子结点，能不能直接删除
+//		 System.out.println(tree.remove(10));
+		
+		// 测试当有多个元素的  非叶子结点，能不能直接删除
+//		 System.out.println(tree.remove(84));
+		
+		// 测试能不能左旋（叶）
+//		 System.out.println(tree.remove(5));
+		
+		// 测试能不能右旋（叶）
+//		 System.out.println(tree.remove(32));
+		
+		// 测试能不能左旋 （非叶）
+//		 System.out.println(tree.remove(25));
+//		 System.out.println(tree.remove(24));
+		
+		// 测试能不能右旋 （非叶）
+//		tree.put(12, "12");
+//		System.out.println(tree.remove(25));
+//		System.out.println(tree.remove(24));
+		
+		// 测试能不能删除根结点
+		//System.out.println(tree.remove(13));
+		
+		System.out.println();
+	}
+	
+	@Test
+	public void testRemove2() {
+		TwoThreeTree<Integer, String> tree = new TwoThreeTree<Integer, String>();
+		int[] arr = {5, 9, 6};
+		for (int i = 0; i < arr.length; i++) {
+			tree.put(arr[i], String.valueOf(arr[i]));
+		}
+		System.out.println(tree.remove(5));
+		System.out.println();
 	}
 	
 	@Test

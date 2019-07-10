@@ -86,4 +86,20 @@ public class AVLTreeTest {
 		System.out.println(tree.getRootNodeHeight());
 		System.out.println(tree.getSize());
 	}
+	
+	@Test
+	public void testRemove() {
+		AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
+		tree.put(5, "5");
+		tree.put(3, "3");
+		tree.put(8, "8");
+		tree.put(1, "1");
+		tree.put(2, "2");
+		tree.put(6, "6");
+		tree.put(10, "10");
+		tree.put(15, "15");
+		
+		tree.delete(8);
+		tree.inOrderTraversal();
+	}
 }

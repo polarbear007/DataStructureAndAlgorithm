@@ -10,7 +10,10 @@ public class AVLTree<K extends Comparable<K>, V> {
 
 	/**
 	 * 	返回指定结点的高度，因为我们可能会拿返回值去做算术运算，所以当指定结点 为null时
-	 * 	其高度也初始化为 0 , 不然会报异常
+	 * 	其高度也初始化为 -1, 不然会报异常
+	 *  1、 不存在的结点高度为 -1
+	 * 	2、 叶子结点高度为 0
+	 * 	3、 非叶子结点的高度为其左右子结点中 较高的结点的高度 + 1
 	 * @param node
 	 * @return
 	 */
@@ -18,7 +21,7 @@ public class AVLTree<K extends Comparable<K>, V> {
 		if(node != null) {
 			return node.height;
 		}else {
-			return 0;
+			return -1;
 		}
 	}
 	
@@ -51,12 +54,6 @@ public class AVLTree<K extends Comparable<K>, V> {
 	 * @param root
 	 */
 	private void rightRotate(Node<K, V> root) {
-		System.out.println("进行右旋");
-		// 右旋之前，我们应该先看一下根结点的左子树是否需要先 进行 左旋
-		if(getHeight(root.left.right) - getHeight(root.left.left) > 0) {
-			leftRotate(root.left);
-		}
-		
 		//根据根结点的 key 和 value 创建一个新的结点
 		Node<K, V> newNode = new Node<K, V>(root.key, root.value);
 		// 然后把新结点的 right 指向 根结点的 right 
@@ -95,10 +92,6 @@ public class AVLTree<K extends Comparable<K>, V> {
 	 * @param root
 	 */
 	private void leftRotate(Node<K, V> root) {
-		// 进行左旋转之前，先检查一下是否需要进行右旋
-		if(getHeight(root.right.left) - getHeight(root.right.right) > 0) {
-			rightRotate(root.right);
-		}
 		// 首先，根据当前的根结点创建一个新的结点
 		Node<K, V> newNode = new Node<K, V>(root.key, root.value);
 		// 把新结点的左子结点指向根结点的左子结点
@@ -202,10 +195,12 @@ public class AVLTree<K extends Comparable<K>, V> {
 	
 	
 	/**
-	 * 	删除有三种情况：
-	 * 	1、 删除的结点是叶子结点，直接删除就可以了
-	 * 	2、 删除的结点有一个子结点，左子结点，或者右子结点
-	 * 	3、 删除的结点有两个子结点
+	 * 	删除的情况其实主要有两种：
+	 * 	1、 删除叶子结点，这种我们直接找到父结点，然后确定在父结点的哪一侧，直接通过父结点删除
+	 * 	2、 删除非叶子结点，我们全部转化成删除叶子结点的情况。
+	 * 		如果左子结点不为 null ，我们就找左子树最大值来替换本结点，然后删除最大值所在的结点。（如果该结点不是叶子结点，重复此步骤）
+	 * 		如果左子结点为null ，那么右子结点肯定不为null, 那么我们就找右子树最小值来替换本结点，然后删除最小值所在的结点。
+	 * 		（同样，如果最小值不是叶子结点，我们重复此步骤）
 	 * @param key
 	 * @return
 	 */
@@ -229,114 +224,44 @@ public class AVLTree<K extends Comparable<K>, V> {
 			result = targetNode.value;
 		}
 		
-		// 再然后，我们就可以开始考虑删除的三种情况了
-		// 如果是叶子结点，那么我们需要考虑两个情况： 
-		//   1、目标结点是根结点
-		//   2、 目标结点不是根结点
-		if(targetNode.left == null && targetNode.right == null) {
-			// 目标结点是根结点，说明整个树就一个根结点
-			if(targetNode.parent == null) {
-				rootNode = null;
-			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
+		while(true) {
+			// 如果 targetNode 刚好是叶子结点，那么我们啥也不用担心，直接 判断 targetNode 在 parentNode 的左侧还是右侧
+			// 然后设置成 null 就可以了
+			if(targetNode.left == null && targetNode.right == null) {
+				// 父结点为 null ，说明是根结点
+				if(targetNode.parent == null) {
+					rootNode = null;
+				}else if(targetNode == targetNode.parent.left){
 					targetNode.parent.left = null;
 				}else {
 					targetNode.parent.right = null;
 				}
-				// 更新一下 height 属性
 				updateHeight(targetNode.parent);
-			}
-			// 如果目标结点左结点不为空，而右结点为空
-			// 那么我们需要考虑两个情况：
-			//   1、 目标结点是根结点
-			//   2、 目标结点不是根结点
-		}else if(targetNode.left != null && targetNode.right == null) {
-			// 如果删除的是根结点，那么我们直接使 rootNode 指向 targetNode.left 就可以了
-			if(targetNode.parent == null) {
-				rootNode = targetNode.left;
+				break;
 			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
-					targetNode.parent.left = targetNode.left;
-				}else {
-					// 如果目标结点是父结点的右结点
-					targetNode.parent.right = targetNode.left;
+				// 如果targetNode 不是叶子结点，那么我们就看看 targetNode.left 是不是空，
+				// 如果左子结点不为空，那么我们就优先删除左子树的最大值来替换 targetNode
+				if(targetNode.left != null) {
+					Node<K, V> maxNode = max(targetNode.left);
+					targetNode.key = maxNode.key;
+					targetNode.value = maxNode.value;
+					targetNode = maxNode;
+				}else{
+					// 如果 targetNode 左子结点为空，那么我们才去找右子树的最小值来替换 targetNode
+					Node<K, V> minNode = min(targetNode.right);
+					targetNode.key = minNode.key;
+					targetNode.value = minNode.value;
+					targetNode = minNode;
 				}
-				// 更新一下 height 属性
-				updateHeight(targetNode.parent);
+				// 【注意】 targetNode 虽然替换成了  maxNode 或者 minNode ，但是并不一定是叶子结点
+				// 		  如果 targetNode 替换后，还不是叶子结点，我们就重复上面的步骤，继续替换下去，一直找到叶子结点为止
 			}
-			// 不管是什么目标结点的父结点是什么情况，不管目标结点是父结点的左子结点还是右子结点
-			// 最后 目标结点的左子结点的父结点都要指向目标结点的父结点（有可能为 null）
-			targetNode.left.parent = targetNode.parent;
-		}else if(targetNode.left == null && targetNode.right != null) {
-			// 如果删除的是根结点，那么我们直接使 rootNode 指向 targetNode.right 就可以了
-			if(targetNode.parent == null) {
-				rootNode = targetNode.right;
-			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
-					targetNode.parent.left = targetNode.right;
-				}else {
-					// 如果目标结点是父结点的右结点
-					targetNode.parent.right = targetNode.right;
-				}
-				// 更新一下 height 属性
-				updateHeight(targetNode.parent);
-			}
-			// 不管是什么目标结点的父结点是什么情况，不管目标结点是父结点的左子结点还是右子结点
-			// 最后 目标结点的右子结点的父结点都要指向目标结点的父结点（有可能为 null）
-			targetNode.right.parent = targetNode.parent;
-		}else {
-			// 现在只剩下 目标结点 有两个子结点的这种可能了
-			// 这里我们有两种处理思路：
-			// 1、 先删除目标结点的  右子树的最小值，然后 使用右子树的最小值来替换目标结点的值
-			// 2、 先删除目标结点的  左子树的最大值，然后 使用左子树的最大值来替换目标结点的值
-			V deleteMin = deleteMin(targetNode.right);
-			targetNode.value = deleteMin;
-		}
-		// 删除成功以后，我们需要维护 一下 size
-		size--;
-		
-		// 删除元素以后，我们要检查一下左子树和右子树的高度，看看是否需要进行旋转
-		if(getRootRightHeight() - getRootLeftHeight() > 1) {
-			leftRotate(rootNode);
-		}else if(getRootLeftHeight() - getRootRightHeight() > 1) {
-			rightRotate(rootNode);
 		}
 		
-		return result;
-	}
-	
-	/**
-	 * 	删除指定根结点的子树的最小结点
-	 * @param root
-	 */
-	private V deleteMin(Node<K, V> root) {
-		if(root == null) {
-			throw new RuntimeException("子树根结点不能为 null");
-		}
-		Node<K, V> targetNode = min(root);
-		// 这里我们不需要考虑 targetNode 为 null 的情况，因为只要 root 不为 null，就肯定会有最小值
-		V result = targetNode.value;
-		// 某个子树里面最小的结点可以肯定两点就是： 左子结点为 null
-		// 另外一点就是： 如果目标结点的父结点不为 null ，那么目标结点肯定是父结点的左子结点
+		// 删除了结点以后，我们应该再检查一下，删除以后是否还满足AVL树的规范
+		// 我们按照删除的路径，从被实际被删除的结点的父结点开始，一路向上检查
+		rebalance(targetNode.parent);
 		
-		// 如果目标结点的父结点是 null ，那么说明目标结点就是根结点
-		// 那么我们就让目标结点的右子结点(没有左子结点)去代替根结点
-		if(targetNode.parent == null) {
-			rootNode = targetNode.right;
-		}else {
-			// 如果目标结点不是根结点，那么我们就需要让目标结点的父结点的 left 指向目标结点的右子结点
-			targetNode.parent.left = targetNode.right;
-			// 更新一下 height 属性，因为 targetNode 已经被删除，所以我们不需要考虑targetNode 的 height 值
-			updateHeight(targetNode.parent);
-		}
-		// 不管目标结点是不是根结点，只要 targetNode.right 不为空，
-		// 我们需要维护一下targetNode.right 结点的parent参数
-		if(targetNode.right != null) {
-			targetNode.right.parent = targetNode.parent;
-		}
 		return result;
 	}
 	
@@ -357,40 +282,6 @@ public class AVLTree<K extends Comparable<K>, V> {
 				return currNode;
 			}
 		}
-	}
-	
-	/**
-	 * 	删除指定子树的最大结点
-	 * @param root
-	 */
-	private V deleteMax(Node<K, V> root) {
-		if(root == null) {
-			throw new RuntimeException("子树根结点不能为 null");
-		}
-		// 先找到要删除的目标结点
-		Node<K, V> targetNode = max(root);
-		// 这里我们不需要考虑 targetNode 为 null 的情况，因为只要 root 不为 null，就肯定会有最大值
-		V result = targetNode.value;
-		// 因为目标结点是最大值，所以我们可以确认两点：
-		// 1、 targetNode.right 一定是 null
-		// 2、 targetNode 的parent 属性如果不是 null 的话，那么 targetNode 一定是父结点的右子结点
-		
-		// 如果目标结点的父结点为 null ，那么说明 targetNode 就是根结点
-		// 那么我们直接把 rootNode 替换为 targetNode.left 
-		if(targetNode.parent == null) {
-			rootNode = targetNode.left;
-		}else {
-			// 如果目标结点不是根结点，那么我们需要让父结点的右子结点指向 目标结点的左子结点
-			targetNode.parent.right = targetNode.left;
-			// 更新一下 height 属性值, 因为targetNode 本身已经被删除了，所以我们不需要更新 targetNode
-			updateHeight(targetNode.parent);
-		}
-		// 不管目标结点是不是根结点，只要 目标结点的左子结点不为空，我们都需要维护一下
-		if(targetNode.left != null) {
-			targetNode.left.parent = targetNode.parent;
-		}
-		
-		return result;
 	}
 	
 	/**
@@ -534,16 +425,70 @@ public class AVLTree<K extends Comparable<K>, V> {
 					}
 				}
 			}
-		}
-		
-		// 添加元素以后，我们要检查一下左子树和右子树的高度，看看是否需要旋转
-		if(getRootRightHeight() - getRootLeftHeight() > 1) {
-			leftRotate(rootNode);
-		}else if(getRootLeftHeight() - getRootRightHeight() > 1) {
-			rightRotate(rootNode);
+			// 添加完结点以后我们需要从新添加的结点 开始 检查平衡性
+			rebalance(newNode);
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * 	从新添加或者删除的结点开始，逐步向上检查
+	 * 	当检查到一个不平衡的结点时，我们就以这个结点为中心进行旋转
+	 * 	具体应该怎么旋转，应该根据四种情况来分析：
+	 * 	1、 left left case
+	 * 	2、 left right case 
+	 * 	3、 right right case
+	 * 	4、 right left case
+	 * @param currNode
+	 */
+	private void rebalance(Node<K, V> currNode) {
+		int balance = 0;
+		int subBalance = 0;
+		while(currNode != null) {
+			balance = getBalance(currNode);
+			// 说明总体左子树高度大于右子树，需要右旋
+			if(balance > 1) {
+				// 我们再检查一下 左子树 的左右子树高度差
+				subBalance = getBalance(currNode.left);
+				// 如果左子树高于右子树，满足 left left case
+				if(subBalance > 0) {
+					rightRotate(currNode);
+				}else {
+					// 这里我们不需要考虑 subBalance == 0 的情况，因为不可能出现
+					// 如果左子树低于右子树，满足 left right case
+					leftRotate(currNode.left);
+					rightRotate(currNode);
+				}
+				break;
+			}else if(balance < -1){
+				// 说明总体左子树高度小于右子树，需要左旋
+				// 我们再检查一下 右子树 的左右子树高度差
+				subBalance = getBalance(currNode.right);
+				// 如果左子树高于右子树，满足 right left case
+				if(subBalance > 0) {
+					rightRotate(currNode.right);
+					leftRotate(currNode);
+				}else {
+					// 这里我们不需要考虑 subBalance == 0 的情况，因为不可能出现
+					// 满足 right right  case ，直接左旋
+					leftRotate(currNode);
+				}
+				break;
+			}else {
+				currNode = currNode.parent;
+			}
+		}
+	}
+	
+	/**
+	 * 	如果返回值大于 1 , 则说明我们总体需要左旋
+	 * 	如果返回值小于 -1， 则说明我们总体需要右旋
+	 * @param node
+	 * @return
+	 */
+	private int getBalance(Node<K, V> node) {
+		return getHeight(node.left) - getHeight(node.right);
 	}
 	
 	/**

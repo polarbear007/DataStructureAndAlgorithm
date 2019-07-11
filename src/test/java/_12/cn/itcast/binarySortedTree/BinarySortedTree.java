@@ -197,30 +197,32 @@ public class BinarySortedTree<K extends Comparable<K>, V>{
 	 * 	删除指定根结点的子树的最小结点
 	 * @param root
 	 */
-	private V deleteMin(Node<K, V> root) {
+	private Node<K, V> deleteMin(Node<K, V> root) {
 		if(root == null) {
 			throw new RuntimeException("子树根结点不能为 null");
 		}
 		Node<K, V> targetNode = min(root);
 		// 这里我们不需要考虑 targetNode 为 null 的情况，因为只要 root 不为 null，就肯定会有最小值
-		V result = targetNode.value;
-		// 某个子树里面最小的结点可以肯定两点就是： 左子结点为 null
-		// 另外一点就是： 如果目标结点的父结点不为 null ，那么目标结点肯定是父结点的左子结点
+		// 某个子树里面最小的结点可以肯定一点就是： 最小值的左子结点为 null
 		
 		// 如果目标结点的父结点是 null ，那么说明目标结点就是根结点
-		// 那么我们就让目标结点的右子结点(没有左子结点)去代替根结点
+		// 那么我们就让目标结点的右子结点去代替根结点（右子结点可能为null）
 		if(targetNode.parent == null) {
 			rootNode = targetNode.right;
 		}else {
-			// 如果目标结点不是根结点，那么我们就需要让目标结点的父结点的 left 指向目标结点的右子结点
-			targetNode.parent.left = targetNode.right;
+			// 如果目标结点不是根结点，那么我们就需要判断一下删除结点在父结点的左边还是右边
+			if(targetNode.parent.left == targetNode) {
+				targetNode.parent.left = targetNode.right;
+			}else {
+				targetNode.parent.right = targetNode.right;
+			}
 		}
 		// 不管目标结点是不是根结点，只要 targetNode.right 不为空，
 		// 我们需要维护一下targetNode.right 结点的parent参数
 		if(targetNode.right != null) {
 			targetNode.right.parent = targetNode.parent;
 		}
-		return result;
+		return targetNode;
 	}
 	
 	/**
@@ -255,31 +257,35 @@ public class BinarySortedTree<K extends Comparable<K>, V>{
 	 * 	删除指定子树的最大结点
 	 * @param root
 	 */
-	private V deleteMax(Node<K, V> root) {
+	private Node<K, V> deleteMax(Node<K, V> root) {
 		if(root == null) {
 			throw new RuntimeException("子树根结点不能为 null");
 		}
 		// 先找到要删除的目标结点
 		Node<K, V> targetNode = max(root);
-		// 这里我们不需要考虑 targetNode 为 null 的情况，因为只要 root 不为 null，就肯定会有最大值
-		V result = targetNode.value;
-		// 因为目标结点是最大值，所以我们可以确认两点：
-		// 1、 targetNode.right 一定是 null
-		// 2、 targetNode 的parent 属性如果不是 null 的话，那么 targetNode 一定是父结点的右子结点
 		
-		// 如果目标结点的父结点为 null ，那么说明 targetNode 就是根结点
-		// 那么我们直接把 rootNode 替换为 targetNode.left 
+		// 因为目标结点是最大值，所以我们可以确认一点：targetNode.right 一定是 null
+		// 删除一个最大结点的时候，我们应该考虑以下几个情况：
+		// 1、 删除的结点是根结点，也就是父结点为空，我们需要直接让 targetNode.left 变成根结点（targetNode.left可能为空）
+		// 2、 删除的结点不是根结点，也就是父结点不为空
+		//      我们只需要确认删除结点是父结点的左子结点还是右子结点，然后让父结点指向删除结点的左子结点就可以了
 		if(targetNode.parent == null) {
 			rootNode = targetNode.left;
 		}else {
-			// 如果目标结点不是根结点，那么我们需要让父结点的右子结点指向 目标结点的左子结点
-			targetNode.parent.right = targetNode.left;
+			if(targetNode == targetNode.parent.left) {
+				targetNode.parent.left = targetNode.left;
+			}else {
+				targetNode.parent.right = targetNode.left;
+			}
 		}
-		// 不管目标结点是不是根结点，只要 目标结点的左子结点不为空，我们都需要维护一下
+		
+		// 不管目标结点是不是根结点，只要 targetNode.left 不为空，
+		// 我们需要维护一下targetNode.left 结点的parent参数
 		if(targetNode.left != null) {
 			targetNode.left.parent = targetNode.parent;
 		}
-		return result;
+		
+		return targetNode;
 	}
 	
 	/**
@@ -304,8 +310,8 @@ public class BinarySortedTree<K extends Comparable<K>, V>{
 	/**
 	 * 	删除有三种情况：
 	 * 	1、 删除的结点是叶子结点，直接删除就可以了
-	 * 	2、 删除的结点有一个子结点，左子结点，或者右子结点
-	 * 	3、 删除的结点有两个子结点
+	 * 	2、 删除的结点是非结点，我们转换成删除这个结点的前驱结点或者后继结点，
+	 * 		如果前驱或者后继还是非叶结点，我们就继续找其前驱或者后继结点
 	 * @param key
 	 * @return
 	 */
@@ -329,66 +335,35 @@ public class BinarySortedTree<K extends Comparable<K>, V>{
 			result = targetNode.value;
 		}
 		
-		// 再然后，我们就可以开始考虑删除的三种情况了
-		// 如果是叶子结点，那么我们需要考虑两个情况： 
-		//   1、目标结点是根结点
-		//   2、 目标结点不是根结点
-		if(targetNode.left == null && targetNode.right == null) {
-			// 目标结点是根结点，说明整个树就一个根结点
-			if(targetNode.parent == null) {
-				rootNode = null;
-			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
+		while(true) {
+			// 如果目标结点是叶子结点，那么我们需要再看一下目标结点是不是根结点
+			if(targetNode.left == null && targetNode.right == null) {
+				// 如果目标结点即是叶子结点，又是根结点，那么我们直接让 rootNode 等于 null 就可以了
+				if(targetNode.parent == null) {
+					rootNode = null;
+					// 如果目标结点是父结点的左子结点
+				}else if(targetNode.parent.left == targetNode) {
 					targetNode.parent.left = null;
 				}else {
 					targetNode.parent.right = null;
 				}
-			}
-			// 如果目标结点左结点不为空，而右结点为空
-			// 那么我们需要考虑两个情况：
-			//   1、 目标结点是根结点
-			//   2、 目标结点不是根结点
-		}else if(targetNode.left != null && targetNode.right == null) {
-			// 如果删除的是根结点，那么我们直接使 rootNode 指向 targetNode.left 就可以了
-			if(targetNode.parent == null) {
-				rootNode = targetNode.left;
+				break;
 			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
-					targetNode.parent.left = targetNode.left;
+				// 如果目标结点不是叶子结点，并且 targetNode.left 不为空，我们就找到其前驱结点，用前驱结点替换目标结点
+				if(targetNode.left != null) {
+					Node<K, V> maxNode = max(targetNode.left);
+					targetNode.key = maxNode.key;
+					targetNode.value = maxNode.value;
+					targetNode = maxNode;
 				}else {
-					// 如果目标结点是父结点的右结点
-					targetNode.parent.right = targetNode.left;
+					Node<K, V> minNode = min(targetNode.right);
+					targetNode.key = minNode.key;
+					targetNode.value = minNode.value;
+					targetNode = minNode;
 				}
 			}
-			// 不管是什么目标结点的父结点是什么情况，不管目标结点是父结点的左子结点还是右子结点
-			// 最后 目标结点的左子结点的父结点都要指向目标结点的父结点（有可能为 null）
-			targetNode.left.parent = targetNode.parent;
-		}else if(targetNode.left == null && targetNode.right != null) {
-			// 如果删除的是根结点，那么我们直接使 rootNode 指向 targetNode.right 就可以了
-			if(targetNode.parent == null) {
-				rootNode = targetNode.right;
-			}else {
-				// 如果目标结点是父结点的左结点
-				if(targetNode.parent.left == targetNode) {
-					targetNode.parent.left = targetNode.right;
-				}else {
-					// 如果目标结点是父结点的右结点
-					targetNode.parent.right = targetNode.right;
-				}
-			}
-			// 不管是什么目标结点的父结点是什么情况，不管目标结点是父结点的左子结点还是右子结点
-			// 最后 目标结点的右子结点的父结点都要指向目标结点的父结点（有可能为 null）
-			targetNode.right.parent = targetNode.parent;
-		}else {
-			// 现在只剩下 目标结点 有两个子结点的这种可能了
-			// 这里我们有两种处理思路：
-			// 1、 先删除目标结点的  右子树的最小值，然后 使用右子树的最小值来替换目标结点的值
-			// 2、 先删除目标结点的  左子树的最大值，然后 使用左子树的最大值来替换目标结点的值
-			V deleteMin = deleteMin(targetNode.right);
-			targetNode.value = deleteMin;
 		}
+		
 		// 删除成功以后，我们需要维护 一下 size
 		size--;
 		return result;

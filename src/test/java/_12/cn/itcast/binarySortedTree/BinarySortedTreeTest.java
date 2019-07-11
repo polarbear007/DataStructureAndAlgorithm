@@ -123,21 +123,26 @@ public class BinarySortedTreeTest {
 	@Test
 	public void testDelete() {
 		BinarySortedTree<Integer, String> tree = new BinarySortedTree<Integer, String>();
-		tree.put2(3, "eric");
-		tree.put2(1, "rose");
-		tree.put2(2, "jack");
-		tree.put2(4, "tom");
-		tree.put2(5, "jerry");
-		System.out.println("删除了："  + tree.delete(2));
+		tree.put2(13, "13");
+		tree.put2(11, "11");
+		tree.put2(18, "18");
+		tree.put2(8, "8");
+		tree.put2(12, "12");
+		tree.put2(15, "15");
+		tree.put2(25, "25");
+		tree.put2(7, "7");
+		tree.put2(10, "10");
+		tree.put2(14, "14");
+		System.out.println("删除了："  + tree.delete(18));
 		tree.inOrderTraversal();
 		System.out.println("************");
-		System.out.println("删除了："  + tree.delete(4));
+		System.out.println("删除了："  + tree.delete(7));
 		tree.inOrderTraversal();
 		System.out.println("************");
-		System.out.println("删除了："  + tree.delete(1));
+		System.out.println("删除了："  + tree.delete(11));
 		tree.inOrderTraversal();
 		System.out.println("************");
-		System.out.println("删除了："  + tree.delete(3));
+		System.out.println("删除了："  + tree.delete(13));
 		tree.inOrderTraversal();
 		System.out.println("************");
 		System.out.println("删除了："  + tree.delete(5));

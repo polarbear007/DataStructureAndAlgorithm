@@ -261,4 +261,16 @@ public class BinarySortedTreeTest {
 			System.out.println(node);
 		}
 	}
+	
+	@Test
+	public void testRemove() {
+		BinarySortedTree<Integer, String> tree = new BinarySortedTree<Integer, String>();
+		int[] arr = {15, 8, 20, 5, 12, 18, 25, 11};
+		for (int i = 0; i < arr.length; i++) {
+			tree.put(arr[i], String.valueOf(arr[i]));
+		}
+		
+		tree.delete(20);
+		tree.inOrderTraversal();
+	}
 }

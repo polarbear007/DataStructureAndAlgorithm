@@ -355,7 +355,7 @@ public class BinarySortedTree<K extends Comparable<K>, V>{
 					targetNode.key = maxNode.key;
 					targetNode.value = maxNode.value;
 					targetNode = maxNode;
-				}else {
+				}else {// 如果目标结点不是叶子结点，并且 targetNode.right 不为空，我们就找到其后继结点，用后继结点替换目标结点
 					Node<K, V> minNode = min(targetNode.right);
 					targetNode.key = minNode.key;
 					targetNode.value = minNode.value;

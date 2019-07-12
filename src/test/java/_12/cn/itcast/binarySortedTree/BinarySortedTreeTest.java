@@ -269,7 +269,6 @@ public class BinarySortedTreeTest {
 		for (int i = 0; i < arr.length; i++) {
 			tree.put(arr[i], String.valueOf(arr[i]));
 		}
-		
 		tree.delete(20);
 		tree.inOrderTraversal();
 	}

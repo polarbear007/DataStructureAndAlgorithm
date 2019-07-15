@@ -16,7 +16,7 @@ public class DepthFirstSearchTest1 {
 		graph.addEdge("C", "D");
 		graph.addEdge("C", "E");
 		graph.addEdge("D", "E");
-		// 再创建一个广度优先遍历的对象
+		// 再创建一个深度优先遍历的对象
 		DepthFirstSearch1<String> search = new DepthFirstSearch1<>(graph);
 		search.dfs();
 	}

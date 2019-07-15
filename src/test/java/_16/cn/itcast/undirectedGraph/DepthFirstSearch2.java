@@ -19,13 +19,19 @@ public class DepthFirstSearch2<V> {
 	
 	// 构造函数，传入一个图对象 和 起点顶点的索引
 	public DepthFirstSearch2(UndirectedGraph2<V> graph) {
-		marked = new boolean[graph.getVertexCount()];
-		this.graph = graph;
+		if(graph != null) {
+			marked = new boolean[graph.getVertexCount()];
+			this.graph = graph;
+		}else {
+			throw new RuntimeException("图对象不能为空");
+		}
 	}
 	
 	// 从指定顶点开始深度优先遍历，可能并不能遍历全部的顶点（如果这个图不是连通图的话，就会出现这种情况）
 	// 所以如果我们想要遍历全部的顶点的话，那么就得遍历 图里面的 顶点集合，从所有的顶点出发去遍历
 	public void dfs() {
+		// 开始遍历全部顶点之前，我们重置一下 marked 数组
+		marked = new boolean[graph.getVertexCount()];
 		for (int i = 0; i < graph.getVertexs().length; i++) {
 			dfsFromVertexIndex(i);
 		}

@@ -40,6 +40,14 @@ public class UndirectedGraph2<V> {
 	}
 	
 	/**
+	 * 	返回全部顶点的数组
+	 * @return
+	 */
+	public Vertex<V>[] getVertexs(){
+		return adjTable;
+	}
+	
+	/**
 	 * 	返回顶点的数量
 	 * @return
 	 */
@@ -126,6 +134,10 @@ public class UndirectedGraph2<V> {
 		@Override
 		public String toString() {
 			return "Vertex [value=" + value + "]";
+		}
+		
+		public LinkedList<Integer> getAdjList(){
+			return adjList;
 		}
 	}
 }

@@ -13,6 +13,16 @@ public class UndirectedGraph<V> {
 	//  权值大于0，说明这条边存在
 	private int[][] adjMatrix;
 	
+	// 返回邻接矩阵
+	public int[][] getAdjMatrix(){
+		return adjMatrix;
+	}
+	
+	// 返回顶点的集合
+	public ArrayList<V> getVertexs(){
+		return vertexs;
+	}
+	
 	// 根据顶点的数据，我们初始化  vertexs 集合 和 adjMatrix 矩阵
 	public UndirectedGraph(V[] data) {
 		super();

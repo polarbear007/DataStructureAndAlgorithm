@@ -33,6 +33,14 @@ public class UndirectedGraph3<V> {
 	}
 	
 	/**
+	 * 	返回邻接表
+	 * @return
+	 */
+	public Vertex<V>[] getAdjTable() {
+		return adjTable;
+	}
+	
+	/**
 	 * 	返回顶点的数量
 	 * @return
 	 */
@@ -119,25 +127,54 @@ public class UndirectedGraph3<V> {
 	}
 	
 	@SuppressWarnings("hiding")
-	class Vertex<V>{
+	public static class Vertex<V>{
 		V value;
 		// 这一次每个顶点内部的 链表，保存的不再是其他顶点的索引了，而是  edge 对象， 而edge 对象是保存权值的
 		LinkedList<Edge> adjList = new LinkedList<>();
+		
+		
+		public V getValue() {
+			return value;
+		}
+
+
+		public LinkedList<Edge> getAdjList() {
+			return adjList;
+		}
+
 		@Override
 		public String toString() {
 			return "Vertex [value=" + value + "]";
 		}
 	}
 	
-	class Edge{
+	public static class Edge implements Comparable<Edge>{
 		int fromIndex;
 		int toIndex;
 		int weight;
+		
+		public int getFromIndex() {
+			return fromIndex;
+		}
+
+		public int getToIndex() {
+			return toIndex;
+		}
+
+		public int getWeight() {
+			return weight;
+		}
+
 		public Edge(int fromIndex, int toIndex, int weight) {
 			super();
 			this.fromIndex = fromIndex;
 			this.toIndex = toIndex;
 			this.weight = weight;
+		}
+
+		@Override
+		public int compareTo(Edge other) {
+			return this.weight - other.weight;
 		}
 	}
 }

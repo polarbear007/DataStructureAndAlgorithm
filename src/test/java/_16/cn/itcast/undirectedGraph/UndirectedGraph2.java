@@ -92,11 +92,13 @@ public class UndirectedGraph2<V> {
 		// 如果索引值为 -1 , 或者两个顶点的索引值相同，我们都不处理直接返回 false
 		if(fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
 			// 因为是无向图，所以其实 from 和 to 并没有先后关系，我们添加一条边，其实是在两个顶点的 adjList 都添加边
-			adjTable[fromIndex].adjList.add(toIndex);
-			adjTable[toIndex].adjList.add(fromIndex);
-			// 添加以后，我们维护一下 edgeCount 
-			edgeCount++;
-			return true;
+			if(!adjTable[fromIndex].adjList.contains(toIndex) && !adjTable[toIndex].adjList.contains(fromIndex)) {
+				adjTable[fromIndex].adjList.add(toIndex);
+				adjTable[toIndex].adjList.add(fromIndex);
+				// 添加以后，我们维护一下 edgeCount 
+				edgeCount++;
+				return true;
+			}
 		}
 		// 如果不满足前面的条件，我们直接返回 false
 		return false;

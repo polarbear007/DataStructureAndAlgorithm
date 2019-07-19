@@ -101,11 +101,13 @@ public class UndirectedGraph3<V> {
 			// 这里我们根据 fromIndex 和  toIndex 创建两个 Edge 对象
 			Edge edge1 = new Edge(fromIndex, toIndex, weight);
 			Edge edge2 = new Edge(toIndex, fromIndex, weight);
-			adjTable[fromIndex].adjList.add(edge1);
-			adjTable[toIndex].adjList.add(edge2);
-			// 添加以后，我们维护一下 edgeCount 
-			edgeCount++;
-			return true;
+			if(!adjTable[fromIndex].adjList.contains(edge1) && !adjTable[toIndex].adjList.contains(edge2)) {
+				adjTable[fromIndex].adjList.add(edge1);
+				adjTable[toIndex].adjList.add(edge2);
+				// 添加以后，我们维护一下 edgeCount 
+				edgeCount++;
+				return true;
+			}
 		}
 		// 如果不满足前面的条件，我们直接返回 false
 		return false;
@@ -175,6 +177,34 @@ public class UndirectedGraph3<V> {
 		@Override
 		public int compareTo(Edge other) {
 			return this.weight - other.weight;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + fromIndex;
+			result = prime * result + toIndex;
+			result = prime * result + weight;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Edge other = (Edge) obj;
+			if (fromIndex != other.fromIndex)
+				return false;
+			if (toIndex != other.toIndex)
+				return false;
+			if (weight != other.weight)
+				return false;
+			return true;
 		}
 	}
 }

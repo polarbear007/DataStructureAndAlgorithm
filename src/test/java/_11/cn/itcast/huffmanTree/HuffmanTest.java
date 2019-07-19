@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.junit.Test;
 
@@ -167,5 +166,32 @@ public class HuffmanTest {
 		File file = new File("object.txt");
 		String path = file.getAbsoluteFile().getParentFile().getPath();
 		System.out.println(path);
+	}
+	
+	@Test
+	public void testCount() throws Exception {
+		Huffman huffman = new Huffman();
+		int[] frequencyTab = null;
+		File file = new File("空白图.bmp");
+		FileInputStream fis = new FileInputStream(file);
+		byte[] bys = new byte[1024];
+		int len = 0;
+		while((len = fis.read(bys)) != -1) {
+			frequencyTab = huffman.getFrequencyTabBySourceBytes(bys, frequencyTab);
+		}
+		
+		int max = -1;
+		int sum = 0;
+		for (int i = 0; i < frequencyTab.length; i++) {
+			if(max < frequencyTab[i]) {
+				max = frequencyTab[i];
+			}
+			sum += frequencyTab[i];
+		}
+		
+		System.out.println("出现频率最高的字节占总字节数的百分比：" + max * 1.0 / sum);
+		
+		fis.close();
+		
 	}
 }

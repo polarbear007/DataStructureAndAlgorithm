@@ -76,8 +76,6 @@ public class PrimMST1<V> {
 	 * 			===> 这里只能如此了，用不上优先级队列来比较 横切边的权值。（很多本次循环比较过的权值，下次循环还得重新比较）
 	 */
 	public UndirectedGraph<V> getMST() {
-		// 初始化一下  marked 数组
-		marked = new boolean[graph.getVertexCount()];
 		ArrayList<V> vertexs = graph.getVertexs();
 		
 		// 根据原图，初始化一个没有边的子图，我们下面会不断地寻找最小生成树的边，并添加到这个子图中

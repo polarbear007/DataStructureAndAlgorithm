@@ -1,4 +1,4 @@
-package _20.cn.itcast.primMST;
+package _20.cn.itcast.mst.primMST;
 
 import java.util.ArrayList;
 

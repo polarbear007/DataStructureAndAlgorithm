@@ -8,6 +8,15 @@ import _16.cn.itcast.undirectedGraph.UndirectedGraph3;
 import _16.cn.itcast.undirectedGraph.UndirectedGraph3.Edge;
 import _16.cn.itcast.undirectedGraph.UndirectedGraph3.Vertex;
 
+/**
+ * 	Dijkstra 算法构建 单源 最短路径树 （邻接表法）
+ * 	【说明】 因为有 Edge 对象，我们可以使用优先级队列来优化横切边的比较。
+ * 			又因为并不是直接比较 Edge 对象的 权值，所以我们又在外面包了一层。
+ * @author Administrator
+ *
+ * @param <V>
+ */
+
 public class DijkstraSPT2<V> {
 	private UndirectedGraph3<V> graph;
 	// 记录从起始点到本顶点最短的距离

@@ -77,6 +77,8 @@ public class PrimMST2<V> {
 	 * 	【说明】 这次我们使用邻接表来表示图，所以封装了 Edge 对象
 	 * 			因此，我们可以可以使用优先级队列来优化排序的速度。
 	 * 			如果我们的顶点有很多的话，比使用邻接矩阵的实现，速度要快很多
+	 * 	【说明】 虽然我们这里说的是无向图，但是其实我们的边对象是有严格区分 fromIndex 和 toIndex 的
+	 * 			所以我们在判断一条边是不是横切边的时候，我们只需要看看 toIndex 对应的顶点是不是在 selected 集合即可
 	 * @return
 	 */
 	public UndirectedGraph3<V> getMST() {
@@ -98,44 +100,35 @@ public class PrimMST2<V> {
 		// 把挑选的顶点的全部边都添加到优先队列中
 		queue.addAll(adjTable[0].getAdjList());
 		Edge minEdge = null;
-		boolean containsFromIndex = false;
-		boolean containsToIndex = false;
-		int targetIndex = -1;
+		int fromIndex = -1;
+		int toIndex = -1;
 		
 		while(selected.size() < adjTable.length) {
 			// 获取队列第一个元素（其实就是堆顶元素，默认是最小值）
 			minEdge = queue.poll();
-			// 然后，我们需要判断一下这条边是不是横切边（判断标识，有一个顶点不在 selected 集合中）
-			//  如果两个顶点都在 selected 中，那么这条边不是横切边，我们需要重新从队列中弹出元素
-			//  否则，我们就把那个不在 selected 中的顶点保存到 selected 中，
-			//       然后，再把这个顶点的全部边都保存到 queue中，进行排序
-			containsFromIndex = selected.contains(minEdge.getFromIndex());
-			containsToIndex = selected.contains(minEdge.getToIndex());
-			
-			// 如果都包含，我们跳过本次循环
-			if(containsFromIndex && containsToIndex) {
+			// 如果队列弹出一个 null ，说明队列空了，也就是说没有任何有效边了，最小生成树已经构建完毕了
+			if(minEdge == null) {
+				break;
+			}
+			// 我们需要判断一下弹出的边是不是横切边（只需要看 toIndex 有没有在 selected 中就可以了）
+			// 如果 minEdge 不是横切边，我们直接再弹一条出来
+			if(selected.contains(minEdge.getToIndex())) {
 				continue;
-			}
-			// 如果不包含 fromIndex , 那么要找的目标顶点就是  fromIndex 
-			// 反之要找的就是 toIndex
-			if(!containsFromIndex) {
-				targetIndex = minEdge.getFromIndex();
 			}else {
-				targetIndex = minEdge.getToIndex();
-			}
-			// 现在我们已经可以确认 minEdge 是最小生成树的一条边了，所以我们就需要把这个边添加到最小生成树中
-			graph2.addEdge(adjTable[minEdge.getFromIndex()].getValue(), adjTable[minEdge.getToIndex()].getValue(), minEdge.getWeight());
-			
-			// 确定了 targetIndex 以后，我们需要把这个索引保存到 selected 中
-			selected.add(targetIndex);
-			
-			// 再然后，我们还需要把targetIndex 顶点关联的全部边也添加到  queue 中
-			// 当然，刚才删除的那个 minEdge ,还有其他可能两个顶点也都包含在 selected 的边也不要再添加了
-			for (Edge edge : adjTable[targetIndex].getAdjList()) {
-				if(selected.contains(edge.getFromIndex()) && selected.contains(edge.getToIndex())) {
-					continue;
+				// 如果 minEdge 是横切边，那么我们就可以确定这条边是最小生成树的一条边了
+				fromIndex = minEdge.getFromIndex();
+				toIndex = minEdge.getToIndex();
+				// 给最小生成树添加一条边
+				graph2.addEdge(adjTable[fromIndex].getValue(), adjTable[toIndex].getValue(), minEdge.getWeight());
+				// 然后维护selected 集合
+				selected.add(toIndex);
+				// 再维护优先级队列
+				// 我们只添加 toIndex 不在 selected 集合中的边进优先级队列
+				for (Edge edge : adjTable[toIndex].getAdjList()) {
+					if(!selected.contains(edge.getToIndex())) {
+						queue.add(edge);
+					}
 				}
-				queue.add(edge);
 			}
 		}
 		

@@ -12,13 +12,13 @@ import _22.cn.itcast.directedGraph.DirectedGraph;
  *
  */
 public class BellmanFordForAdjacencyMatrix<V> {
-	private DirectedGraph<V> graph;
+	DirectedGraph<V> graph;
 	// 记录从起始点到本顶点最短的距离
-	private Double[] dist;
+	Double[] dist;
 	// 记录从起始点到本顶点最短路线的上一个顶点的索引
-	private int[] preVertex;
+	int[] preVertex;
 	// 记录起始点的索引
-	private int sourceIndex;
+	int sourceIndex;
 	// 记录这个图是否存在 负权环
 	private boolean isContainingNegativeCircle;
 	
@@ -67,7 +67,7 @@ public class BellmanFordForAdjacencyMatrix<V> {
 	/**
 	 * 	Bellman-Ford 算法的核心内容
 	 */
-	private void bulidSPT() {
+	void bulidSPT() {
 		Double[][] adjMatrix = graph.getAdjMatrix();
 		boolean flag = false;
 		// 最外层的循环 n - 1 次 

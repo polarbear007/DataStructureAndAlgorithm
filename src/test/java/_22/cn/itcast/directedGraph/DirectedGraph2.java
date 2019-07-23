@@ -72,7 +72,7 @@ public class DirectedGraph2<V> {
 	 * @param value
 	 * @return
 	 */
-	private int getIndexByValue(V value) {
+	public int getIndexByValue(V value) {
 		if (value == null) {
 			throw new RuntimeException("value 不能为空");
 		}

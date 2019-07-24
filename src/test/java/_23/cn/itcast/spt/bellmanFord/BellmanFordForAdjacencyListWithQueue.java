@@ -6,6 +6,12 @@ import _22.cn.itcast.directedGraph.DirectedGraph2;
 import _22.cn.itcast.directedGraph.DirectedGraph2.Edge;
 import _22.cn.itcast.directedGraph.DirectedGraph2.Vertex;
 
+/**
+ * 	邻接表法优化
+ * @author Administrator
+ *
+ * @param <V>
+ */
 public class BellmanFordForAdjacencyListWithQueue<V> extends BellmanFordForAdjacencyList<V> {
 	/**
 	 * 	带参构造必须跟父类一样

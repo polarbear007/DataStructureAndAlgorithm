@@ -4,6 +4,12 @@ import java.util.LinkedList;
 
 import _22.cn.itcast.directedGraph.DirectedGraph;
 
+/**
+ * 	邻接矩阵优化版
+ * @author Administrator
+ *
+ * @param <V>
+ */
 public class BellmanFordForAdjacencyMatrixWithQueue<V> extends BellmanFordForAdjacencyMatrix<V>{
 	/**
 	 * 	“重写”一下父类的构造方法

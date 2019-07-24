@@ -20,7 +20,7 @@ public class BellmanFordForAdjacencyMatrix<V> {
 	// 记录起始点的索引
 	int sourceIndex;
 	// 记录这个图是否存在 负权环
-	private boolean isContainingNegativeCircle;
+	boolean isContainingNegativeCircle;
 	
 	/**
 	 * 	检查是否存在负权环

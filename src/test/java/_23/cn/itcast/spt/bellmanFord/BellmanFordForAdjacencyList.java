@@ -14,15 +14,15 @@ import _22.cn.itcast.directedGraph.DirectedGraph2.Vertex;
  *
  */
 public class BellmanFordForAdjacencyList<V> {
-	private DirectedGraph2<V> graph;
+	DirectedGraph2<V> graph;
 	// 记录从起始点到本顶点最短的距离
-	private Double[] dist;
+	Double[] dist;
 	// 记录从起始点到本顶点最短路线的上一个顶点的索引
-	private int[] preVertex;
+	int[] preVertex;
 	// 记录起始点的索引
-	private int sourceIndex;
+	int sourceIndex;
 	// 记录这个图是否存在 负权环
-	private boolean isContainingNegativeCircle;
+	boolean isContainingNegativeCircle;
 
 	/**
 	 * 检查是否存在负权环
@@ -70,7 +70,7 @@ public class BellmanFordForAdjacencyList<V> {
 	/**
 	 * Bellman-Ford 算法的核心内容
 	 */
-	private void bulidSPT() {
+	void bulidSPT() {
 		// 首先，获取邻接表数组
 		Vertex<V>[] adjTable = graph.getAdjTable();
 		// 然后我们设置一个 flag 参数，尽量减少循环次数

@@ -10,9 +10,9 @@ import _22.cn.itcast.directedGraph.DirectedGraph2.Edge;
 import _22.cn.itcast.directedGraph.DirectedGraph2.Vertex;
 
 public class TopoLogicalSortForAdajacencyList<V> {
-	private boolean[] visited;
-	private int[] indegree;
-	private DirectedGraph2<V> graph;
+	boolean[] visited;
+	int[] indegree;
+	DirectedGraph2<V> graph;
 	
 	/**
 	 * 	构造函数，传入有向图对象
@@ -73,14 +73,14 @@ public class TopoLogicalSortForAdajacencyList<V> {
 	/**
 	 * 	初始化 visited 数组
 	 */
-	private void initVisited() {
+	void initVisited() {
 		Arrays.fill(visited, false);
 	}
 
 	/**
 	 * 	初始化 indegree 数组
 	 */
-	private void initIndegree() {
+	void initIndegree() {
 		// 担心多次执行，我们先把 indegree 数组的全部元素值都初始化成 0
 		Arrays.fill(indegree, 0);
 		Vertex<V>[] adjTable = graph.getAdjTable();

@@ -7,9 +7,9 @@ import java.util.List;
 import _22.cn.itcast.directedGraph.DirectedGraph;
 
 public class TopoLogicalSortForAdjacencyMatrix<V> {
-	private boolean[] visited;
-	private int[] indegree;
-	private DirectedGraph<V> graph;
+	boolean[] visited;
+	int[] indegree;
+	DirectedGraph<V> graph;
 	
 	/**
 	 * 	构造函数，传入有向图对象
@@ -62,10 +62,14 @@ public class TopoLogicalSortForAdjacencyMatrix<V> {
 		}
 		
 		// 前面循环处理结束以后，我们再遍历一下 visited 数组，如果发现还有 false 的，说明还是存在环，直接抛异常
-		for (int i = 0; i < visited.length; i++) {
-			if(!visited[i]) {
-				throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
-			}
+//		for (int i = 0; i < visited.length; i++) {
+//			if(!visited[i]) {
+//				throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
+//			}
+//		}
+		// 上面的逻辑可以使用比较 list 集合长度 和 顶点数量是否相等来实现
+		if(list.size() < graph.getVertexCount()) {
+			throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
 		}
 		return list;
 	}
@@ -73,14 +77,14 @@ public class TopoLogicalSortForAdjacencyMatrix<V> {
 	/**
 	 * 	初始化 visited 数组
 	 */
-	private void initVisited() {
+	void initVisited() {
 		Arrays.fill(visited, false);
 	}
 
 	/**
 	 * 	初始化 indegree 数组
 	 */
-	private void initIndegree() {
+	void initIndegree() {
 		// 担心多次执行，我们先把 indegree 数组的全部元素值都初始化成 0
 		Arrays.fill(indegree, 0);
 		Double[][] adjMatrix = graph.getAdjMatrix();

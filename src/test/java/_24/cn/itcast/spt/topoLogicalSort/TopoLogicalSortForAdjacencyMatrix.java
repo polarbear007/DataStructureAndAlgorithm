@@ -49,12 +49,8 @@ public class TopoLogicalSortForAdjacencyMatrix<V> {
 					list.add(vertexs.get(j));
 					for (int k = 0; k < adjMatrix[j].length; k++) {
 						if(adjMatrix[j][k] != null) {
-							// 其实我们可以在这里检查 indegree[k] 是否小于 0，如果小于 0 说明肯定存在环，无法进行拓朴排序
-							// 【说明】 如果我们拓朴排序的目的就是查检是否存在有向环，那么这里可以直接返回
-							if(--indegree[k] < 0) {
-								throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
-							}
-							
+							// 不管怎么样，先维护 indegree 数组
+							indegree[k]--;
 						}
 					}
 				}

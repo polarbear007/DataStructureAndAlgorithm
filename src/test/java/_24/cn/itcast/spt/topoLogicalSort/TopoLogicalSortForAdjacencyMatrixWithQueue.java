@@ -55,10 +55,8 @@ public class TopoLogicalSortForAdjacencyMatrixWithQueue<V> extends TopoLogicalSo
 			for (int i = 0; i < adjMatrix[currIndex].length; i++) {
 				// 我们只处理 未访问过的顶点
 				if(!visited[i] && adjMatrix[currIndex][i] != null) {
-					// 如果我们发现一个顶点的度已经降到小于 0  ，那么说明这个图肯定有环
-					if(--indegree[i] < 0) {
-						throw new RuntimeException("此图含有环，无法进行拓朴排序");
-					}
+					// 不管怎么样，先维护 indegree 数组
+					indegree[i]--;
 					// 是否放进队列有两个条件： 
 					//  1、 没有在队列中，我们不重复添加
 					//  2、 入度为 0 ;

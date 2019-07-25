@@ -9,7 +9,7 @@ import _22.cn.itcast.directedGraph.DirectedGraph2;
 import _22.cn.itcast.directedGraph.DirectedGraph2.Edge;
 import _22.cn.itcast.directedGraph.DirectedGraph2.Vertex;
 
-public class TopoLogicalSortForAdajacencyList<V> {
+public class TopoLogicalSortForAdjacencyList<V> {
 	boolean[] visited;
 	int[] indegree;
 	DirectedGraph2<V> graph;
@@ -18,7 +18,7 @@ public class TopoLogicalSortForAdajacencyList<V> {
 	 * 	构造函数，传入有向图对象
 	 * @param graph
 	 */
-	public TopoLogicalSortForAdajacencyList(DirectedGraph2<V> graph) {
+	public TopoLogicalSortForAdjacencyList(DirectedGraph2<V> graph) {
 		if(graph == null) {
 			throw new RuntimeException("图对象不能为空");
 		}
@@ -53,19 +53,21 @@ public class TopoLogicalSortForAdajacencyList<V> {
 					
 					// 然后，让这个顶点指向的其他顶点的 入度都减1
 					for (Edge edge : adjTable[j].getAdjList()) {
-						if(--indegree[edge.getToIndex()] < 0) {
-							throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
-						}
+						// 不管怎么样，先维护 indegree 数组
+						indegree[edge.getToIndex()]--;
 					}
 				}
 			}
 		}
 		
 		// 前面循环处理结束以后，我们再遍历一下 visited 数组，如果发现还有 false 的，说明还是存在环，直接抛异常
-		for (int i = 0; i < visited.length; i++) {
-			if(!visited[i]) {
-				throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
-			}
+//		for (int i = 0; i < visited.length; i++) {
+//			if(!visited[i]) {
+//				throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
+//			}
+//		}
+		if(list.size() < graph.getVertexCount()) {
+			throw new RuntimeException("此有向图存在环，不可进行拓朴排序");
 		}
 		return list;
 	}

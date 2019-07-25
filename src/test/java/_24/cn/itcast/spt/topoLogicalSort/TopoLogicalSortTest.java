@@ -33,7 +33,7 @@ public class TopoLogicalSortTest {
 		graph.addEdge("D", "E");
 		graph.addEdge("E", "C");
 		
-		TopoLogicalSortForAdajacencyList<String> topoLogic = new TopoLogicalSortForAdajacencyList<>(graph);
+		TopoLogicalSortForAdjacencyList<String> topoLogic = new TopoLogicalSortForAdjacencyList<>(graph);
 		List<String> list = topoLogic.topoLogicSort();
 		System.out.println(list);
 	}
@@ -50,6 +50,22 @@ public class TopoLogicalSortTest {
 		graph.addEdge("A", "C");
 		
 		TopoLogicalSortForAdjacencyMatrix<String> topoLogic = new TopoLogicalSortForAdjacencyMatrixWithQueue<>(graph);
+		List<String> list = topoLogic.topoLogicSort();
+		System.out.println(list);
+	}
+	
+	
+	@Test
+	public void testSortWithQueue2() {
+		String[] data = {"A", "B", "C", "D", "E"};
+		DirectedGraph2<String> graph = new DirectedGraph2<String>(data);
+		graph.addEdge("A", "B");
+		graph.addEdge("A", "C");
+		graph.addEdge("C", "D");
+		graph.addEdge("D", "E");
+		graph.addEdge("E", "C");
+		
+		TopoLogicalSortForAdjacencyList<String> topoLogic = new TopoLogicalSortForAdjacencyListWithQueue<>(graph);
 		List<String> list = topoLogic.topoLogicSort();
 		System.out.println(list);
 	}

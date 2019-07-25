@@ -18,7 +18,7 @@ public class TopoLogicalSortForAdjacencyListWithQueue<V> extends TopoLogicalSort
 	 * 重写父类的 拓朴排序方法
 	 */
 	@Override
-	public List<V> topoLogicSort() {
+	public List<V> topoLogicalSort() {
 		// 首先，我们需要创建返回的 List 对象
 		ArrayList<V> list = new ArrayList<V>();
 		// 然后，我们需要遍历有向图全部的边，初始化 indegree 数组

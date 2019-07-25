@@ -29,7 +29,7 @@ public class TopoLogicalSortForAdjacencyMatrix<V> {
 	 * 	对有向图进行拓朴排序，如果发现有环，直接扔异常
 	 * @return
 	 */
-	public List<V> topoLogicSort(){
+	public List<V> topoLogicalSort(){
 		// 首先，我们需要创建返回的 List 对象
 		ArrayList<V> list = new ArrayList<V>();
 		// 然后，我们需要遍历有向图全部的边，初始化 indegree 数组

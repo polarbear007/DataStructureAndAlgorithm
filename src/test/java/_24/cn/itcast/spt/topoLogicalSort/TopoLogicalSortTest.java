@@ -15,8 +15,8 @@ public class TopoLogicalSortTest {
 		graph.addEdge("A", "B");
 		graph.addEdge("B", "C");
 		
-//		graph.addEdge("C", "A");  // 会形成环
-		graph.addEdge("A", "C");
+		graph.addEdge("C", "A");  // 会形成环
+		//graph.addEdge("A", "C");
 		
 		TopoLogicalSortForAdjacencyMatrix<String> topoLogic = new TopoLogicalSortForAdjacencyMatrix<>(graph);
 		List<String> list = topoLogic.topoLogicSort();
@@ -34,6 +34,22 @@ public class TopoLogicalSortTest {
 		graph.addEdge("E", "C");
 		
 		TopoLogicalSortForAdajacencyList<String> topoLogic = new TopoLogicalSortForAdajacencyList<>(graph);
+		List<String> list = topoLogic.topoLogicSort();
+		System.out.println(list);
+	}
+	
+	
+	@Test
+	public void testSortWithQueue() {
+		String[] data = {"A", "B", "C"};
+		DirectedGraph<String> graph = new DirectedGraph<String>(data);
+		graph.addEdge("A", "B");
+		graph.addEdge("B", "C");
+		
+		graph.addEdge("C", "A");  // 会形成环
+		graph.addEdge("A", "C");
+		
+		TopoLogicalSortForAdjacencyMatrix<String> topoLogic = new TopoLogicalSortForAdjacencyMatrixWithQueue<>(graph);
 		List<String> list = topoLogic.topoLogicSort();
 		System.out.println(list);
 	}

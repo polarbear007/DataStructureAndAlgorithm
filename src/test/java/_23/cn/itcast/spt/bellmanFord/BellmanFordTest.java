@@ -20,7 +20,7 @@ public class BellmanFordTest {
 		graph.addEdge("B", "E", 2.0);
 		graph.addEdge("D", "B", 1.0);
 		graph.addEdge("D", "C", 5.0);
-		graph.addEdge("E", "D", -3.0);
+		graph.addEdge("E", "D", -5.0);
 		
 		BellmanFordForAdjacencyMatrix<String> spt = new BellmanFordForAdjacencyMatrix<>(graph, "A");
 		Stack<String> pathTo = spt.pathTo("D");

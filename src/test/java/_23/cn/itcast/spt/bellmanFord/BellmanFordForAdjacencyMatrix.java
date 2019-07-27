@@ -20,15 +20,15 @@ public class BellmanFordForAdjacencyMatrix<V> {
 	// 记录起始点的索引
 	int sourceIndex;
 	// 记录这个图是否存在 负权环
-	boolean isContainingNegativeCircle;
+//	boolean isContainingNegativeCircle;
 	
 	/**
 	 * 	检查是否存在负权环
 	 * @return
 	 */
-	public boolean isContainingNegativeCircle() {
-		return isContainingNegativeCircle;
-	}
+//	public boolean isContainingNegativeCircle() {
+//		return isContainingNegativeCircle;
+//	}
 
 	// 构造方法我们只需要传入原图对象就可以了，不需要像 求最小生成树那样检查是否是连通图
 	// 因为求最短路径树，我们并不要求原图必须是一个连通图
@@ -74,7 +74,7 @@ public class BellmanFordForAdjacencyMatrix<V> {
 		for (int i = 0; i < graph.getVertexCount() - 1; i++) {
 			// 遍历邻接矩阵中每一条权值不为 null 的边
 			for (int j = 0; j < adjMatrix.length; j++) {
-				for (int k = 0; k < adjMatrix[i].length; k++) {
+				for (int k = 0; k < adjMatrix[j].length; k++) {
 					if(adjMatrix[j][k] != null && dist[k] > dist[j] + adjMatrix[j][k]) {
 						dist[k] = dist[j] + adjMatrix[j][k];
 						preVertex[k] = j;
@@ -96,26 +96,36 @@ public class BellmanFordForAdjacencyMatrix<V> {
 		
 		// 正常情况下，走完上面的三层循环，也就结束了。
 		// 但是如果我们想要检测是否存在负权环，那么就需要再执行一套三层循环
-		for (int i = 0; i < graph.getVertexCount() - 1; i++) {
-			for (int j = 0; j < adjMatrix.length; j++) {
-				for (int k = 0; k < adjMatrix[i].length; k++) {
-					if(adjMatrix[j][k] != null && dist[k] > dist[j] + adjMatrix[j][k]) {
-						// 注意，本次循环一发现可以进行松驰操作的，直接把 dist[k] 赋值为 负无穷
-						dist[k] = Double.NEGATIVE_INFINITY;
-						preVertex[k] = j;
-						flag = true;
-					}
+//		for (int i = 0; i < graph.getVertexCount() - 1; i++) {
+//			for (int j = 0; j < adjMatrix.length; j++) {
+//				for (int k = 0; k < adjMatrix[j].length; k++) {
+//					if(adjMatrix[j][k] != null && dist[k] > dist[j] + adjMatrix[j][k]) {
+//						// 注意，本次循环一发现可以进行松驰操作的，直接把 dist[k] 赋值为 负无穷
+//						dist[k] = Double.NEGATIVE_INFINITY;
+//						preVertex[k] = j;
+//						flag = true;
+//					}
+//				}
+//			}
+//			
+//			if(!flag) {
+//				break;
+//			}else {
+//				// 如果有任何修改，我们就把 这个变量变成 true 
+//				isContainingNegativeCircle = true;
+//				flag = false;
+//			}
+//		}
+		
+		// 最后循环一次，一旦发现负权环，直接扔异常就好了
+		for (int j = 0; j < adjMatrix.length; j++) {
+			for (int k = 0; k < adjMatrix[j].length; k++) {
+				if(adjMatrix[j][k] != null && dist[k] > dist[j] + adjMatrix[j][k]) {
+					throw new RuntimeException("此图存在负权环，无法求最短路径");
 				}
 			}
-			
-			if(!flag) {
-				break;
-			}else {
-				// 如果有任何修改，我们就把 这个变量变成 true 
-				isContainingNegativeCircle = true;
-				flag = false;
-			}
 		}
+		
 	}
 	
 	/**

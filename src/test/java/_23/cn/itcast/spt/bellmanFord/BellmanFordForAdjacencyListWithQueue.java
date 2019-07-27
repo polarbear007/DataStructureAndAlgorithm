@@ -71,9 +71,13 @@ public class BellmanFordForAdjacencyListWithQueue<V> extends BellmanFordForAdjac
 					
 					// 不管前面怎么处理，如果这个顶点已经入队列8次了，那么我们需要把这个顶点的 dist 值
 					// 设置成   负无穷大，并且把这个图标记成有负环的图
+//					if(count[toIndex] >= n) {
+//						dist[toIndex] = Double.NEGATIVE_INFINITY;
+//						isContainingNegativeCircle = true;
+//					}
+					// 我们一旦发现负权环，直接扔异常
 					if(count[toIndex] >= n) {
-						dist[toIndex] = Double.NEGATIVE_INFINITY;
-						isContainingNegativeCircle = true;
+						throw new RuntimeException("此图存在负权环，无法求最短路径");
 					}
 				}
 			}

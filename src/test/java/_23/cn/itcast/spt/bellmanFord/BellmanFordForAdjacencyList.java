@@ -22,16 +22,16 @@ public class BellmanFordForAdjacencyList<V> {
 	// 记录起始点的索引
 	int sourceIndex;
 	// 记录这个图是否存在 负权环
-	boolean isContainingNegativeCircle;
+//	boolean isContainingNegativeCircle;
 
 	/**
 	 * 检查是否存在负权环
 	 * 
 	 * @return
 	 */
-	public boolean isContainingNegativeCircle() {
-		return isContainingNegativeCircle;
-	}
+//	public boolean isContainingNegativeCircle() {
+//		return isContainingNegativeCircle;
+//	}
 
 	// 构造方法我们只需要传入原图对象就可以了，不需要像 求最小生成树那样检查是否是连通图
 	// 因为求最短路径树，我们并不要求原图必须是一个连通图
@@ -104,25 +104,36 @@ public class BellmanFordForAdjacencyList<V> {
 		}
 
 		// 重新来三个循环，我们想要检测是否存在负权环
-		for (int i = 0; i < adjTable.length - 1; i++) {
-			for (int j = 0; j < adjTable.length; j++) {
-				for (Edge edge : adjTable[j].getAdjList()) {
-					fromIndex = edge.getFromIndex();
-					toIndex = edge.getToIndex();
-					if (dist[toIndex] > dist[fromIndex] + edge.getWeight()) {
-						// 在负权环内，或者受负权环影响的顶点，距离全部直接设置成负无穷大
-						dist[toIndex] = Double.NEGATIVE_INFINITY;
-						preVertex[toIndex] = fromIndex;
-						flag = true;
-					}
+//		for (int i = 0; i < adjTable.length - 1; i++) {
+//			for (int j = 0; j < adjTable.length; j++) {
+//				for (Edge edge : adjTable[j].getAdjList()) {
+//					fromIndex = edge.getFromIndex();
+//					toIndex = edge.getToIndex();
+//					if (dist[toIndex] > dist[fromIndex] + edge.getWeight()) {
+//						// 在负权环内，或者受负权环影响的顶点，距离全部直接设置成负无穷大
+//						dist[toIndex] = Double.NEGATIVE_INFINITY;
+//						preVertex[toIndex] = fromIndex;
+//						flag = true;
+//					}
+//				}
+//			}
+//
+//			if (!flag) {
+//				break;
+//			} else {
+//				flag = false;
+//				isContainingNegativeCircle = true;
+//			}
+//		}
+		
+		// 我们只需要再循环一次，看看是否还能再次进行 松驰操作，如果可以的话，说明存在负权环，直接扔异常
+		for (int j = 0; j < adjTable.length; j++) {
+			for (Edge edge : adjTable[j].getAdjList()) {
+				fromIndex = edge.getFromIndex();
+				toIndex = edge.getToIndex();
+				if (dist[toIndex] > dist[fromIndex] + edge.getWeight()) {
+					throw new RuntimeException("此图存在负权环，无法求最短路径");
 				}
-			}
-
-			if (!flag) {
-				break;
-			} else {
-				flag = false;
-				isContainingNegativeCircle = true;
 			}
 		}
 	}

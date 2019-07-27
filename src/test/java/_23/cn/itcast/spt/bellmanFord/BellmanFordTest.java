@@ -28,7 +28,7 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 	
 	// 存在负环的图(邻接矩阵版)
@@ -51,7 +51,7 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 	
 	
@@ -75,7 +75,7 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 	
 	// 有负环的图(邻接表版)
@@ -98,7 +98,7 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 	
 	
@@ -123,7 +123,7 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 	
 	
@@ -148,6 +148,6 @@ public class BellmanFordTest {
 			System.out.println(pathTo.pop());
 		}
 		System.out.println(spt.minDistanceTo("D"));
-		System.out.println(spt.isContainingNegativeCircle());
+//		System.out.println(spt.isContainingNegativeCircle());
 	}
 }

@@ -63,9 +63,14 @@ public class BellmanFordForAdjacencyMatrixWithQueue<V> extends BellmanFordForAdj
 					
 					// 再然后，我们再来判断一下这个顶点添加到队列的次数， 如果已经大于或者等于  n 次
 					// 那么说明存在负权环，而且 i 对应的顶点就是负权环上的一个顶点 
+//					if(count[i] >= adjMatrix[currIndex].length) {
+//						dist[i] = Double.NEGATIVE_INFINITY;
+//						isContainingNegativeCircle = true;
+//					}
+					
+					// 如果发现存在负权环，直接扔异常
 					if(count[i] >= adjMatrix[currIndex].length) {
-						dist[i] = Double.NEGATIVE_INFINITY;
-						isContainingNegativeCircle = true;
+						throw new RuntimeException("此图存在负权环，无法求最短路径");
 					}
 				}
 			}

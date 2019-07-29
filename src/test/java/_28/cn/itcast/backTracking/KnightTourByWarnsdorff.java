@@ -66,8 +66,8 @@ public class KnightTourByWarnsdorff {
 	/**
 	 * 	对外部暴露的方法
 	 */
-	public void soveKT() {
-		if (soveKT(sourceRow, sourceColumn, 0)) {
+	public void solveKT() {
+		if (solveKT(sourceRow, sourceColumn, 0)) {
 			System.out.println("已经找到一种解！");
 			for (int i = 0; i < chessboard.length; i++) {
 				for (int j = 0; j < chessboard[i].length; j++) {
@@ -87,7 +87,7 @@ public class KnightTourByWarnsdorff {
 	 * @param step
 	 * @return
 	 */
-	private boolean soveKT(int x, int y, int step) {
+	private boolean solveKT(int x, int y, int step) {
 		// System.out.println(step);
 		// 一进这个方法，我们要做的第一步就是把 chessboard[x][y] 这个元素值改成 step
 		chessboard[x][y] = step;
@@ -117,7 +117,7 @@ public class KnightTourByWarnsdorff {
 		IndexPair currIndexPair = null;
 		while(!queue.isEmpty()) {
 			currIndexPair = queue.poll();
-			if(soveKT(currIndexPair.x, currIndexPair.y, step + 1)) {
+			if(solveKT(currIndexPair.x, currIndexPair.y, step + 1)) {
 				return true;
 			}else {
 				chessboard[currIndexPair.x][currIndexPair.y] = -1;

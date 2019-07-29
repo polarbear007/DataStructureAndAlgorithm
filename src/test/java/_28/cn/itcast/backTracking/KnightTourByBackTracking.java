@@ -70,8 +70,8 @@ public class KnightTourByBackTracking {
 	/**
 	 * 	对外暴露一个接口，省得我们还得去注意什么参数
 	 */
-	public void soveKT() {
-		if (soveKT(sourceRow, sourceColumn, 0)) {
+	public void solveKT() {
+		if (solveKT(sourceRow, sourceColumn, 0)) {
 			System.out.println("已经找到一种解！");
 			for (int i = 0; i < chessboard.length; i++) {
 				for (int j = 0; j < chessboard[i].length; j++) {
@@ -91,7 +91,7 @@ public class KnightTourByBackTracking {
 	 * @param step
 	 * @return
 	 */
-	private boolean soveKT(int x, int y, int step) {
+	private boolean solveKT(int x, int y, int step) {
 		// 一进这个方法，我们要做的第一步就是把 chessboard[x][y] 这个元素值改成 step
 		chessboard[x][y] = step;
 		if (step == N * N - 1) {
@@ -106,7 +106,7 @@ public class KnightTourByBackTracking {
 			nextY = y + yMove[i];
 			// 当然，(x, y) 旁边的 8 个点不一定存在，就算存在，也不一定是空的，所以我们需要先判断一下
 			if (isSafe(nextX, nextY) && isEmpty(nextX, nextY)) {
-				if (soveKT(nextX, nextY, step + 1)) {
+				if (solveKT(nextX, nextY, step + 1)) {
 					return true;
 				} else {
 					// 如果遍历失败，那么我们需要把刚才遍历的那个位置修改的棋盘值改回来

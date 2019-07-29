@@ -8,7 +8,7 @@ public class KTTest {
 	public void test() {
 		KnightTourByBackTracking kt = new KnightTourByBackTracking(8, 0, 0);
 		long start = System.currentTimeMillis();
-		kt.soveKT();
+		kt.solveKT();
 		System.out.println("耗时：" + (System.currentTimeMillis() - start) + "毫秒");
 	}
 	
@@ -17,15 +17,15 @@ public class KTTest {
 	public void test2() {
 		KnightTourByBackTracking kt = new KnightTourByBackTracking(8, 2, 2);
 		long start = System.currentTimeMillis();
-		kt.soveKT();
+		kt.solveKT();
 		System.out.println("耗时：" + (System.currentTimeMillis() - start) + "毫秒");
 	}
 	
 	@Test
 	public void test3() {
-		KnightTourByWarnsdorff kt = new KnightTourByWarnsdorff(50, 36, 2);
+		KnightTourByWarnsdorff kt = new KnightTourByWarnsdorff(9, 0, 0);
 		long start = System.currentTimeMillis();
-		kt.soveKT();
+		kt.solveKT();
 		System.out.println("耗时：" + (System.currentTimeMillis() - start) + "毫秒");
 	}
 }
